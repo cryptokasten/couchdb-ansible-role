@@ -1,0 +1,23 @@
+---
+
+- name: Add CouchDB repo
+  copy:
+    src: bintray-apache-couchdb-rpm.repo
+    dest: /etc/yum.repos.d/bintray-apache-couchdb-rpm.repo
+
+- name: Install CouchDB
+  yum:
+    name: 
+      - epel-release
+      - couchdb
+
+- name: Configure CouchDB
+  template:
+    src: local.ini.j2
+    dest: /opt/couchdb/etc/local.ini
+
+- name: Service CouchDB start
+  service:
+    name: couchdb
+    enabled: yes
+    state: restarted
